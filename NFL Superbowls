@@ -86,6 +86,7 @@ FROM superbowls
 Group by loser_pts
 Having loser_pts > 16;
 
+Filtering when Super Bowl points scored was more than average points of all Super Bowls
 SELECT date,Winner,Loser,
 CASE
 WHEN winner_pts+loser_pts > 46 THEN "Above Avg"
@@ -93,3 +94,13 @@ WHEN winner_pts+loser_pts < 46 THEN "Below Avg"
 Else "Avg"
 End as "Score_avg"
 FROM superbowls;
+
+-- Filtering how many times the New England Patriots won the super bowl
+SELECT COUNT(*) as Super_Bowl_Wins,
+CASE 
+WHEN winner in ("New England Patriots")
+THEN "New England Patriots"
+ELSE "Other"
+END as Team
+FROM superbowls
+Group BY Team;
