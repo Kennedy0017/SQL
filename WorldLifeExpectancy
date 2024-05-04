@@ -106,4 +106,75 @@ ROUND((t2.life_expectancy + t3.life_expectancy)/2,1)
 WHERE t1.life_expectancy = ''
 
 
+-- World Life Expectancy Data Analysis
+
+Select * 
+FROM world_life_expectancy;
+
+Select country, MIN(Life_expectancy), 
+MAX(Life_expectancy),
+ROUND(MAX(Life_expectancy) - MIN(Life_expectancy),1) as Life_Increase
+from world_life_expectancy
+GROUP BY country
+HAVING MIN(Life_expectancy) <> 0 
+AND MAX(Life_expectancy) <> 0
+ORDER By life_increase desc ;
+
+SELECT year, ROUND(avg(Life_expectancy),2) as avg_life_expectancy
+from world_life_expectancy
+WHERE life_expectancy <> 0
+GROUP BY year
+ORDER BY year desc; 
+
+SELECT country, year, AdultMortality,
+row_number() OVER(Partition By country Order By adultmortality desc) as row_table
+from world_life_expectancy;
+
+SELECT country, year, Life_expectancy, AdultMortality,
+SUM(AdultMortality) OVER(Partition By country Order By Year ) as Mortality_Increase
+from world_life_expectancy;
+
+SELECT country, ROUND(AVG(Life_expectancy),1) as Life_exp,
+ROUND(AVG(GDP),1) as GDP
+from world_life_expectancy
+Group By country
+HAVING Life_exp > 0
+AND GDP > 0
+ORDER BY GDP desc;
+
+
+SELECT 
+SUM(CASE WHEN GDP >= 1500 THEN 1 ELSE 0 END) as High_Gdp_Count,
+AVG(CASE WHEN GDP >= 1500 THEN Life_expectancy ELSE Null END) as High_GDP_Life_Exp,
+SUM(CASE WHEN GDP <= 1500 THEN 1 ELSE 0 END) as Low_Gdp_Count,
+AVG(CASE WHEN GDP <= 1500 THEN Life_expectancy ELSE Null END) as Low_GDP_Life_Exp
+FROM world_life_expectancy;
+
+
+SELECT Status, ROUND(AVG(Life_expectancy),1)
+FROM world_life_expectancy
+GROUP BY Status;
+
+
+SELECT Status, Count(Distinct Country), ROUND(AVG(Life_expectancy),1)
+FROM world_life_expectancy
+GROUP BY Status;
+
+
+SELECT country, ROUND(AVG(Life_expectancy),1) as Life_exp,
+ROUND(AVG(BMI),1) as BMI
+from world_life_expectancy
+Group By country
+HAVING Life_exp > 0
+AND BMI > 0
+ORDER BY BMI desc;
+
+
+  
+
+
+
+
+
+
 
