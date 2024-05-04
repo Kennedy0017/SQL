@@ -29,11 +29,11 @@ WHERE row_num > 1;
 
 DELETE FROM USHouseholdIncome
 WHERE row_id IN (
-SELECT row_id
-FROM(
-SELECT row_id, id,
-Row_Number() Over(Partition By id Order BY id) as row_num
-FROM USHouseholdIncome) as duplicates
+  SELECT row_id
+  FROM(
+   SELECT row_id, id,
+   Row_Number() Over(Partition By id Order BY id) as row_num
+   FROM USHouseholdIncome) as duplicates
 WHERE row_num > 1);
 
 Select State_Name, Count(State_Name)
@@ -43,17 +43,17 @@ Group By State_name;
 -- Updating missing/incorrect values
 
 UPDATE USHouseholdIncome
-SET State_Name = 'Georgia'
-WHERE State_Name = 'georia';
+ SET State_Name = 'Georgia'
+ WHERE State_Name = 'georia';
 
 UPDATE USHouseholdIncome
-SET State_Name = 'Alabama'
-WHERE State_Name = 'alabama';
+ SET State_Name = 'Alabama'
+ WHERE State_Name = 'alabama';
 
 UPDATE USHouseholdIncome
-SET Place = 'Autaugaville'
-WHERE County = 'Autauga County'
-AND City = 'Vinemont';
+ SET Place = 'Autaugaville'
+ WHERE County = 'Autauga County'
+ AND City = 'Vinemont';
 
 Select type, Count(type)
 FROM USHouseholdIncome
@@ -99,29 +99,29 @@ SELECT *
  ON u.id = us.id;
 
  SELECT u.State_Name, 
- Round(AVG(Mean),2), Round(AVG(Median),2)
- FROM USHouseholdIncome u
- Inner Join us_household_income_statistics us
- ON u.id = us.id
+  Round(AVG(Mean),2), Round(AVG(Median),2)
+   FROM USHouseholdIncome u
+   Inner Join us_household_income_statistics us
+   ON u.id = us.id
  WHERE Mean <> 0
  GROUP BY u.State_Name
  ORDER BY 2;
  
  
-  SELECT Type, COUNT(Type),
- Round(AVG(Mean),2), Round(AVG(Median),2)
- FROM USHouseholdIncome u
- Inner Join us_household_income_statistics us
- ON u.id = us.id
- WHERE Mean <> 0
- GROUP BY Type 
- ORDER BY 3 desc;
+ SELECT Type, COUNT(Type),
+  Round(AVG(Mean),2), Round(AVG(Median),2)
+  FROM USHouseholdIncome u
+   Inner Join us_household_income_statistics us
+   ON u.id = us.id
+  WHERE Mean <> 0
+  GROUP BY Type 
+  ORDER BY 3 desc;
  
-  SELECT Type, COUNT(Type),
- Round(AVG(Mean),2), Round(AVG(Median),2)
- FROM USHouseholdIncome u
- Inner Join us_household_income_statistics us
- ON u.id = us.id
+ SELECT Type, COUNT(Type),
+  Round(AVG(Mean),2), Round(AVG(Median),2)
+  FROM USHouseholdIncome u
+   Inner Join us_household_income_statistics us
+   ON u.id = us.id
  WHERE Mean <> 0
  GROUP BY Type 
  HAVING COUNT(Type) > 100
@@ -133,9 +133,9 @@ SELECT *
  
  
  SELECT u.State_Name, City, ROUND(AVG(Mean),1)
- FROM USHouseholdIncome u
- JOIN us_household_income_statistics us
- ON u.id = us.id
+  FROM USHouseholdIncome u
+   JOIN us_household_income_statistics us
+   ON u.id = us.id
  WHERE Mean <> 0
  GROUP BY u.State_Name, City
  Order BY 3 desc;
