@@ -2,6 +2,6 @@
 
 ## Welcome to my SQL Portfolio!
 
-Table of Contents
+This Repository showcases my skills and experience in the field of data analysis. Here you will find a collection of projects and analyses that demonstrate my ability to extract insights and make data-driven decisions.
 
-Project 1:[https://github.com/Kennedy0017/SQL/blob/main/Customer%20%26%20Order%20Analytics](main)
+
